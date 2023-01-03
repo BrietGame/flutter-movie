@@ -143,8 +143,10 @@ class _MoviesState extends State<Movies> {
         title: Text("Liste films"),
       ),
       body: GridView.builder(
+          padding: const EdgeInsets.all(8),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
+            crossAxisSpacing: 8,
           ),
           itemBuilder: (context, i) {
             if (i >= _listMovies.length) {
@@ -160,14 +162,26 @@ class _MoviesState extends State<Movies> {
                     );
                   },
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
                     child: Column(
-                      children: [
-                        image,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                        Container(
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15.0),
+                              topRight: Radius.circular(15.0),
+                            ),
+                            child: image,
+                          ),
+                        ),
                         ListTile(
                           title: Text(titleMovie),
                           trailing: CircleAvatar(
-                            child: Text(note.toString()),
                             backgroundColor: (note >= 5 && note <= 7) ? Colors.yellow : (note > 7) ? Colors.green : Colors.red,
+                            child: Text(note.toString()),
                           ),
                         ),
                       ]
@@ -206,11 +220,18 @@ class _MovieDetailState extends State<MovieDetail> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(child: widget.image),
-            Text(widget.titleMovie),
+            Container(
+              padding: EdgeInsets.all(20),
+              child: widget.image,
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Text(widget.titleMovie),
+              margin: EdgeInsets.all(20),
+            ),
             CircleAvatar(
-              child: Text(widget.note.toString()),
               backgroundColor: (widget.note >= 5 && widget.note <= 7) ? Colors.yellow : (widget.note > 7) ? Colors.green : Colors.red,
+              child: Text(widget.note.toString()),
             ),
           ],
         ),
